@@ -1,0 +1,15 @@
+{
+  "name": "steamlike",
+  "version": "1.0.0",
+  "description": "A website that sells users video games and registeres achievements",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "2124805",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0"
+  }
+}
