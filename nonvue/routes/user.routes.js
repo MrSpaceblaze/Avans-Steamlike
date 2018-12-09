@@ -21,14 +21,6 @@ routes.post('/register', auth.register)
 routes.post('/login', auth.login)
 
 /**
- * Gets all information from a user
- * @route GET /users/:username
- * @group User
- * @param {string} username.required - Username of user
- */
-routes.get('/:username', user.getByName)
-
-/**
  * Updates a users password
  * @route PUT /users
  * @group User
@@ -38,11 +30,10 @@ routes.get('/:username', user.getByName)
  */
 routes.put('*', user.update)
 
-/**
- * Gets all users
- * @route GET /users
- * @group User
- */
-routes.get('*', user.getAll)
+routes.get('/library',user.getLibrary)
+
+routes.post('/library',user.addGame)
+
+routes.delete('/library',user.deleteGame)
 
 module.exports = routes

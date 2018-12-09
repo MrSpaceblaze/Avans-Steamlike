@@ -3,7 +3,7 @@ const jwt = require('jwt-simple')
 
 const config = require('./config.json')
 
-function encodeToken(username,secret) {
+function encodeToken(username) {
 
     const playload = {
         exp: moment().add(2, 'days').unix(),
@@ -14,7 +14,7 @@ function encodeToken(username,secret) {
     return jwt.encode(playload, config.secret);
 }
 
-function decodeToken(token,secret, cb) {
+function decodeToken(token, cb) {
 
     try {
 
