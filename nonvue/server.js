@@ -37,9 +37,9 @@ const dev_routes = require('./routes/dev.routes')
 // Routes
 app.get('/', (req, res) => res.send('Hello World!'))
 
-app.use('api/users', user_routes)
-app.use('api/games', game_routes)
-app.use('api/dev', dev_routes)
+app.use('/api/users', user_routes)
+app.use('/api/games', game_routes)
+app.use('/api/dev', dev_routes)
 
 // Catch 404's
 app.use('*', function (req, res) {

@@ -16,7 +16,7 @@
                         Rating
                     </th>
                 </tr>
-                <tr id="games" v-on:click="onRow(game)" v-for="game of games" v-bind:games="games">
+                <tr id="games" v-on:click="onRow(game)" v-for="game of games" v-bind:key="game._id">
                     <td>
                         {{game.pic}}
                     </td>
@@ -37,17 +37,28 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import axios from 'axios'
+import {config} from '../../config/config'
 export default Vue.extend({
     data:{
-        
-        games:function(){
-            return this.getGames()
-        }
+        games:[{}]
     },
-    methods:{
-        getGames:()=>{
-            return []
-        }
+    mounted:function(){
+        axios.get("localhost:"+ config.prototype.port+"/api/dev/register",{headers:{Authorisation:
+        document.cookie
+                    .split(';')
+                    .map(c=>c.trim())
+                    .filter(cookie=>{
+                        return cookie.substring(0,"Auth".length+1)==`${"Auth"}=`;
+                    })
+                    .map(cookie=>{
+                        return decodeURIComponent(cookie.substring("Auth".length+1));
+                    })[0]
+                }
+            }).then((response)=>{
+                alert(response)
+                this.games=response.data
+            })
     }
 })
 </script>
