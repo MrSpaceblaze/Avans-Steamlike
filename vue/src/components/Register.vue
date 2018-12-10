@@ -1,8 +1,8 @@
 <template>
     <div class="container">
         <div>
-            <h4> Developer Login</h4>
-            <form id="login">
+            <h4> Register</h4>
+            <form id="register">
                 <div class="row">
                     <div class="col">
                         <p>Username</p>
@@ -21,39 +21,42 @@
                 </div>
                 
                 
-                <button v-on:click="submit()"> Login </button>
+                <button v-on:click="submit()"> Register </button>
             </form>
         </div>
         <div>
-            <router-link to="/login"> regular login </router-link>
+            <router-link to="/dev/register"> Developer register </router-link>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import axios from 'axios'
-import { config } from '../../config/config'
-
+import Vue from 'vue';
+import axios from 'axios';
+import config from '../config/config';
 export default Vue.extend({
-    el:"login",
-    data:{
-        username:"",
-        password:"",
-        
-    },
-    methods:{
-        submit:function(){
-            alert("Submitted")
-            axios.post("localhost:"+ config.prototype.port+"/api/dev/login",{username:this.username,password:this.password})
-                .then((response)=>{
-                    if(response.status==200){
-                        alert("logged in: " + response.data)
-                    }else{
-                        alert("Error")
-                    }
-                })
-        }
+    data(){return{
+        username: '',
+        password: '',
     }
-})
+    },
+    methods: {
+        submit() {
+            axios.post( 'http://localhost:' + 50 + '/api/users/register',
+            { username: this.username, password: this.password})
+                .then((response) => {
+                    if (response.status === 200) {
+                        alert('registered: ' + response.data);
+                    } else {
+                        alert('Error');
+                    }
+                });
+        },
+    },
+});
 </script>
+
+
+<style>
+
+</style>

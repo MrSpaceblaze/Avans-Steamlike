@@ -1,20 +1,19 @@
-var mongoose = require('mongoose')
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-var Game = require('./game.schema');
+var Game = require("./game.schema").GameSchema;
 
-export var DeveloperSchema = new Schema({
-	
+var DeveloperSchema = new Schema({
 	//Name of the developer
 	devName: {
 		type: String,
 		required: true,
 		unique: true,
 	},
-	
-	devUserName:{
+	//Username of the developer
+	devUserName: {
 		type: String,
-		required:true,
-		unique:true,
+		required: true,
+		unique: true,
 	},
 	//Pasword the developer uses to log in
 	devPass: {
@@ -22,10 +21,10 @@ export var DeveloperSchema = new Schema({
 		required: true,
 	},
 	//The games they have developed
-	games: [Game],
+    games: [Game],
 });
 
-export var Developer = mongoose.model('developer', DeveloperSchema);
+var Developer = mongoose.model("developer", DeveloperSchema);
 
 module.exports = {
   Developer,

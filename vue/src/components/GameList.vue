@@ -2,7 +2,7 @@
     <div class="container">
         <div class="col">
             <p>Games</p>
-            <table>
+            <table class="table">
                 <tr>
                     <th>
                     </th>
@@ -36,30 +36,26 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import axios from 'axios'
-import {config} from '../../config/config'
+import Vue from 'vue';
+import axios from 'axios';
+import config from '../config/config';
+import router from '../router';
 export default Vue.extend({
-    data:{
-        games:[{}]
-    },
-    mounted:function(){
-        axios.get("localhost:"+ config.prototype.port+"/api/dev/register",{headers:{Authorisation:
-        document.cookie
-                    .split(';')
-                    .map(c=>c.trim())
-                    .filter(cookie=>{
-                        return cookie.substring(0,"Auth".length+1)==`${"Auth"}=`;
-                    })
-                    .map(cookie=>{
-                        return decodeURIComponent(cookie.substring("Auth".length+1));
-                    })[0]
-                }
-            }).then((response)=>{
-                alert(response)
-                this.games=response.data
-            })
+    data(){return{
+        games: [{}],
     }
-})
+    },
+    methods:{
+        onRow(game:{type:object,_id:''}){
+            router.push('/games/'+game._id)
+        }
+    },
+    mounted() {
+        axios.get(config.url + '/api/games').then((response) => {
+                alert(response);
+                this.games = response.data.games;
+            });
+    },
+});
 </script>
 

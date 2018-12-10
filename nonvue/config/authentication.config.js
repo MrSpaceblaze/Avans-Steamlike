@@ -18,7 +18,7 @@ function decodeToken(token,secret, cb) {
 
     try {
 
-        const payload = jwt.decode(token, config.secret);
+        const payload = jwt.decode(token, secret);
         const now = moment().unix();
 
         // Check if the token has expired

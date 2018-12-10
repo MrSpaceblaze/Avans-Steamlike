@@ -1,0 +1,10 @@
+{
+    "secret":"secret1",
+    "devsecret":"secret2",
+    "databases":{
+        "mongo":"mongodb://localhost/steamlike",
+        "mongotest":"mongodb://localhost/steamliketest",
+        "neo4j": "http://localhost:7474"
+    },
+    "devport":51127
+}

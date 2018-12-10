@@ -1,45 +1,46 @@
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
-  const ObjectId = Schema.Types.ObjectId;
-  
-  const Achievement = require('./achievement.schema.ts');
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
+const Achievement = require("./achievement.schema.js").AchievementSchema;
 
- var GameSchema = new Schema({
-    photo:{
-      type: Blob,
-      required:false,
+var GameSchema = new Schema({
+    photo: {
+      required: false,
+      type: String,
     },
 
     developer: {
+      ref: "developer",
+      required: true,
       type: ObjectId,
-      ref:'developer',
-      required:true,
     },
 
     gameName: {
-      type: String,
       required: true,
+      type: String,
+    },
+
+    price: {
+      required: true,
+      type: Number,
     },
 
     description: {
-      type: String,
       required: true,
+      type: String,
     },
 
-    achievements: {
-      type: [Achievement],
-      required: false,
-    },
+    achievements: [Achievement],
 
-    active:{
-      type:Boolean,
-      default:true
-    }
+    active: {
+      default: true,
+      type: Boolean,
+    },
 });
 
- var Game = mongoose.model('game', GameSchema);
+var Game = mongoose.model("game", GameSchema);
 
-  module.exports = {
-	  Game,
-	  GameSchema,
-  };
+module.exports = {
+  Game,
+  GameSchema,
+};

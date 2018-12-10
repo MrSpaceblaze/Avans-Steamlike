@@ -1,28 +1,27 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 let UserSchema = new Schema({
-  // Username of a user, unique key
-  username: {
-      type: String,
-      required: true,
-      unique: true,
+  // Id's of the games that the user owns
+  library: {
+    ref: "game",
+    required: false,
+    type: [ObjectId],
   },
   // Password of the user
   password: {
-      type: String,
       required: true,
+      type: String,
   },
-  // Id's of the games that the user owns
-  library: {
-    type: [ObjectId],
-    ref: 'game',
-    required: false,
-    default:[{}],
+  // Username of a user, unique key
+  username: {
+      required: true,
+      type: String,
+      unique: true,
   },
 });
 
-let User = model('user', UserSchema);
+let User = mongoose.model("user", UserSchema);
 
 module.exports = User;

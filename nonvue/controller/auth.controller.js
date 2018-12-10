@@ -1,9 +1,9 @@
 const ApiResponse = require('../model/response/api.response')
-const auth = require('../config/authentication.config')
+const auth = require('../../config/authentication.config')
 const User = require('../schemas/user.schema')
 const secret = require('../../config/config.json').secret
 const Developer = require('../schemas/developer.schema').Developer
-const neo = require('../neodb/neodbhelper')
+const neo = require('../neodb/seraphhelper')
 
 function login(req, res) {
 
@@ -53,8 +53,8 @@ function register(req, res) {
     // Check if parameters are empty
     if (uname != '' || pass != '') {
 
-        Developer.findOne({devUserName:uname},{},(err,dev)=>{
-            if(dev){
+        Developer.count({devUserName:uname},(err,dev)=>{
+            if(dev>0){
                 res.status(403).json("A developer with that name already exists").end()
             } else{
                  // Create a model
@@ -76,8 +76,8 @@ function register(req, res) {
             // Username is not taken yet, insert the new user
             else {
                 user.save().then(
-                    neo.saveUser(res, user.username, function() {
-                        res.status(200).json(new ApiResponse(200, user)).end()
+                    neo.saveNode({"username":user.username}, "User", function() {
+                        res.status(200).end()
                     })
                 )
             }

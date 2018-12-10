@@ -3,6 +3,8 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "allowJs":true,
+    "resolveJsonModule":true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
@@ -18,7 +20,8 @@
     ],
     "paths": {
       "@/*": [
-        "src/*"
+        "src/*",
+        "config/*"
       ]
     },
     "lib": [
@@ -33,7 +36,10 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "config/**/*.json",
+    "config/**/*.ts",
+    "config/**/*.js"
   ],
   "exclude": [
     "node_modules"

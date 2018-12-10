@@ -1,30 +1,30 @@
-var mongoose = require('mongoose')
-const Schema = mongoose.Schema
+var mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 var AchievementSchema = new Schema({
-  pic:{
-    type:Blob,
-    required:true,
-  },
-  name:{
+  pic: {
     type: String,
     required: true,
   },
-  desc:{
+  name: {
+    type: String,
+    required: true,
+  },
+  desc: {
     type: String,
     required: true,
   },
   game: {
     type: ObjectId,
-    ref:'game',
+    ref: "game",
     required: true,
   },
 });
 
-const Achievement = mongoose.model('achievement', AchievementSchema);
+const Achievement = mongoose.model("achievement", AchievementSchema);
 
 module.exports = {
  Achievement,
- AchievementSchema
+ AchievementSchema,
 };

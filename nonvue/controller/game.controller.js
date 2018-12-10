@@ -1,8 +1,8 @@
 const ApiResponse = require('../model/response/api.response')
 const neodb = require('../neodb/seraphhelper')
-const User = require('../schema/user.schema')
+const User = require('../schemas/user.schema')
 const Game = require('../schemas/game.schema').Game
-const auth = require('../config/authentication.config')
+const auth = require('../../config/authentication.config')
 const Developer = require('../schemas/developer.schema').Developer
 
 function getByID(req,res){
@@ -31,7 +31,8 @@ function createNew(req,res){
 				photo: req.files.image,
 				developer: dev,
 				gameName: req.body.gameName,
-				description: req.body.description
+				description: req.body.description,
+				price:parseFloat(req.body.price).toFixed(2)
 			})
 		} else{
 			newGame = new Game({
@@ -65,6 +66,19 @@ function deactivate(req,res){
 	})
 }
 
+function getGamesByDev(req,res){
+	var token = req.get('Authorization') || ''
+	var decodedUsername
+
+	if (token != '') {
+		decodedUsername = auth.decodeToken(token)
+	}
+	
+	Developer.findOne({devUserName:decodedUsername.sub},{games:1},(err,dev)=>{
+		res.status(200).json({games:dev.games}).end()
+	})
+}
+
 function updateById(req,res){
 	Game.update({_id:req.params.gid},{$set: {description:req.body.description,active:true}},(err)=>{
 		if(err){
@@ -80,7 +94,29 @@ function updateById(req,res){
 
 function getAll(req,res){
 	Game.find({},(err,games)=>{
-		res.status(200).json(new ApiResponse(200,games)).end()
+		var gamelength=0
+		var gamez= []
+		games.forEach(game=>{
+			
+			neodb.getAllRels(game._id,(err,rels)=>{
+				var rating = 0;
+				var length = 0
+				rels.forEach(element => {
+					rating = rating + element.type
+				});
+				length++
+				if(rels.length==length){
+					var finalrating = rating / rels.length
+					game.rating= finalrating;
+					gamelength++;
+					gamez.push(game)
+					if(gamelength==games.length){
+						res.status(200).json(new ApiResponse(200,gamez)).end()
+					}
+				}
+			})
+		})
+		
 	})
 }
 
@@ -129,21 +165,23 @@ function addRating(req,res){
 function getRating(req,res){
 	neodb.getAllRels(req.params.gid,(err,rels)=>{
 		var rating = 0;
+		var length = 0
 		rels.forEach(element => {
 			rating = rating + element.type
+			length++
+			if(rels.length==length){
+				var finalrating = rating / rels.length
+				res.status(200).json({rating:finalrating}).end()
+			}
 		});
-		rating = rating / rels.length
 
-		res.status(200).json({rating:rating}).end()
+		
 	})
 }
 
 module.exports = {
-	getByID,
-	createNew,
-	deactivate,
-	updateById,
-	getAll,
-	addRating,
-	getRating
+	getByID, getGamesByDev,
+	createNew, deactivate,
+	updateById,	getAll,
+	addRating, getRating,
 }

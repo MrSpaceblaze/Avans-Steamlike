@@ -39,30 +39,30 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import axios from 'axios'
-import {config} from '../../config/config'
+import Vue from 'vue';
+import axios from 'axios';
+import config from '../config/config';
 export default Vue.extend({
-    el:"register",
-    data:{
-        name:"",
-        username:"",
-        password:"",
-        
-    },
-    methods:{
-        submit:function(){
-            alert("Submitted")
-            axios.post("localhost:"+ config.prototype.port+"/api/dev/register",{username:this.username,password:this.password,name:this.name})
-                .then((response)=>{
-                    if(response.status==200){
-                        alert("registered: " + response.data)
-                    }else{
-                        alert("Error")
-                    }
-                })
-        }
+    data(){return{
+        name: '',
+        username: '',
+        password: '',
     }
-})
+    },
+    methods: {
+        submit() {
+            alert('Submitted');
+            axios.post(config.url + '/api/dev/register',
+            {username: this.username, password: this.password, name: this.name})
+                .then((response) => {
+                    if (response.status === 200) {
+                        alert('registered: ' + response.data);
+                    } else {
+                        alert('Error');
+                    }
+                });
+        },
+    },
+});
 </script>
 

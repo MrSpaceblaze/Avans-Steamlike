@@ -1,4 +1,4 @@
-const server = require('../config/config.json').databases.neo4j
+const server = require('../../config/config.json').databases.neo4j
 const db = require('seraph')(server)
 
 //Save Objects
@@ -92,9 +92,9 @@ function deleteRel(preItem1,preItem2,next){
 	})
 }
 
-module.exports={
+module.exports = {
 	saveNode, saveRel,
 	getAllRels, getNode,
 	getNodeByLabel, getRel,
-	deleteRel
-}
+	deleteRel,
+};

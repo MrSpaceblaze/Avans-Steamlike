@@ -1,6 +1,6 @@
-let routes = require('express').Router()
-let user = require('../controller/user.controller')
-let auth = require('../controller/auth.controller')
+let routes = require("express").Router();
+let user = require("../controller/user.controller");
+let auth = require("../controller/auth.controller");
 
 /**
  * Creates a new user
@@ -9,7 +9,7 @@ let auth = require('../controller/auth.controller')
  * @param {string} username.required - Username of user
  * @param {string} password.required - Password of user
  */
-routes.post('/register', auth.register)
+routes.post("/register", auth.register);
 
 /**
  * Logs a user in
@@ -18,7 +18,7 @@ routes.post('/register', auth.register)
  * @param {string} username.required - Username of user
  * @param {string} password.required - Password of user
  */
-routes.post('/login', auth.login)
+routes.post("/login", auth.login);
 
 /**
  * Updates a users password
@@ -28,12 +28,12 @@ routes.post('/login', auth.login)
  * @param {string} oldPassword.required - Old password of user
  * @param {string} newPassword.required - New password of user
  */
-routes.put('*', user.update)
+routes.put("*", user.update);
 
-routes.get('/library',user.getLibrary)
+routes.get("/library", user.getLibrary);
 
-routes.post('/library',user.addGame)
+routes.post("/library", user.addGame);
 
-routes.delete('/library',user.deleteGame)
+routes.delete("/library", user.deleteGame);
 
-module.exports = routes
+module.exports = routes;

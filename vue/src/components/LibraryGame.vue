@@ -1,10 +1,10 @@
 <template>
 <div>
-    <div v-if="name!=null" class="center-block">
+    <div v-if="game!=null" class="center-block">
         {{game}}
     </div>
     
-<div v-if="name!=null">
+<div v-if="game!=null">
         <div class="col-2">
             <div class="row">
                 {{game.name}}
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class= "col">
-            <a v-on:click="refund()">Refund</a>
+            <a v-on:click="refund(game)">Refund</a>
             <a v-on:click="review(game)">Review</a>
         </div>
     </div>
@@ -31,3 +31,13 @@
     
 </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue';
+export default Vue.extend({
+     data(){return{
+        game: { name: 'No game selected', desc: '<- Please select a game from the list to the left'},
+     }
+     },
+});
+</script>

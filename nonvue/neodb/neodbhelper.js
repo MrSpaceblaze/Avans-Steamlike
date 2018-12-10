@@ -1,4 +1,4 @@
-const server = require('../config/config.json').databases.neo4j
+const server = require('../../config/config.json').databases.neo4j
 const db = require('seraph')(server)
 const body = require('body-parser')
 const Friend = "knows"

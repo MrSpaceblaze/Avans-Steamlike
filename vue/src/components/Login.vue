@@ -25,35 +25,40 @@
             </form>
         </div>
         <div>
-            <router-link to="/login/dev"> developer login </router-link>
+            <router-link to="/dev/login"> developer login</router-link>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import axios from 'axios'
-import { config } from '../../config/config'
+import Vue from 'vue';
+import axios from 'axios';
+import config from '../config/config';
+import { Emit } from 'vue-property-decorator';
+import router from '../router';
 
 export default Vue.extend({
-    el:"login",
-    data:{
-        username:"",
-        password:"",
-        
-    },
-    methods:{
-        submit:function(){
-            alert("Submitted")
-            axios.post("localhost:"+ config.prototype.port+"/api/users/login",{username:this.username,password:this.password})
-                .then((response)=>{
-                    if(response.status==200){
-                        alert("logged in: " + response.data)
-                    }else{
-                        alert("Error")
-                    }
-                })
-        }
+    data(){return{
+        username: '',
+        password: '',
     }
-})
+    },
+    methods: {
+        submit() {
+            alert(config.url)
+            axios.post(config.url + '/api/users/login',
+            { username: this.username, password: this.password})
+                .then((response) => {
+                    if (response.status === 200) {
+                        alert('logged in: ' + response.data);
+                        document.cookie=response.data.token
+                        Emit('user')
+                        router.push('/')
+                    } else {
+                        alert('Error');
+                    }
+                });
+        },
+    },
+});
 </script>

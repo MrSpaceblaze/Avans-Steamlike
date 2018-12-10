@@ -1,10 +1,9 @@
 const ApiResponse = require('../model/response/api.response')
-const User = require('../model/schema/user.schema')
 const Developer = require('../schemas/developer.schema').Developer
 const Achievement = require('../schemas/achievement.schema').Achievement
 const Game = require('../schemas/game.schema').Game
 const User = require('../schemas/user.schema').User
-const auth = require('../config/authentication.config')
+const auth = require('../../config/authentication.config')
 const neodb = require('../neodb/seraphhelper')
 
 function createNew(req,res){
