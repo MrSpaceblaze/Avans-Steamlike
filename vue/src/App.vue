@@ -23,6 +23,7 @@
 import Vue from 'vue'
 import axios from 'axios';
 import config from './config/config'
+document.cookie=undefined
 export default Vue.extend({
   data(){
     return{
@@ -31,7 +32,8 @@ export default Vue.extend({
   },
   methods:{
     setUser(userType:string){
-      this.userType==userType
+      console.log(userType)
+      this.userType=userType
     }
   }
 })

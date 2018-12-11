@@ -3,28 +3,33 @@ const Developer = require('../schemas/developer.schema').Developer
 const Achievement = require('../schemas/achievement.schema').Achievement
 const Game = require('../schemas/game.schema').Game
 const User = require('../schemas/user.schema').User
-const auth = require('../../config/authentication.config')
+const auth = require('../config/authentication.config')
 const neodb = require('../neodb/seraphhelper')
 
 function createNew(req,res){
 	var token = req.get('Authorization') || ''
 	var decodedUsername
 
-	var image = req.body.image || undefined
+	var image = req.body.image || ''
+	var name = req.body.name || ''
+	var desc = req.body.desc || ''
 
-	if (token != '') {
-		decodedUsername = auth.decodeToken(token)
-	}
-	Developer.findOne({devUserName:decodedUsername.sub},(err,dev)=>{
-		Game.findOne({developer:dev,_id:req.params.gid},(err,game)=>{
-			var ac = new Achievement({pic:image,name:req.body.name,desc:req.body.desc,game:game})
-			game.achievements.push(ac)
-			game.save().then(()=>{
-				res.status(200).json(ac).end()
+	if(image==''||name==''||desc==''){
+		res.status(412).json({err:"Image, name or desc aren't filled out"}).end()
+	}else{
+		if (token != '') {
+			decodedUsername = auth.decodeToken(token)
+		}
+		Developer.findOne({devUserName:decodedUsername.sub},(err,dev)=>{
+			Game.findOne({developer:dev,_id:req.params.gid},(err,game)=>{
+				var ac = new Achievement({pic:image,name:name,desc:desc,game:game})
+				game.achievements.push(ac)
+				game.save().then(()=>{
+					res.status(200).json(ac).end()
+				})
 			})
 		})
-	})
-	
+	}
 }
 
 function getAll(req,res){

@@ -48,13 +48,13 @@ export default Vue.extend({
     methods: {
         submit() {
             alert();
-            axios.post(config.url + '/api/dev/login',
+            axios.post("http://localhost:51127" + '/api/dev/login',
             {username: this.username, password: this.password})
                 .then((response) => {
                     if (response.status === 200) {
                         alert('logged in: ' + response.data);
                         document.cookie=response.data.token
-                        Emit('user-dev')
+                        this.$emit('user-dev')
                         router.push('/dev')
                     } else {
                         alert('Error');

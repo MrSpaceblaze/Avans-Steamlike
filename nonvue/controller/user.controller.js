@@ -1,7 +1,7 @@
 const ApiResponse = require('../model/response/api.response')
 const User = require('../schemas/user.schema')
 const Game = require('../schemas/game.schema').Game
-const auth = require('../../config/authentication.config')
+const auth = require('../config/authentication.config')
 const neo = require('../neodb/seraphhelper')
 
 

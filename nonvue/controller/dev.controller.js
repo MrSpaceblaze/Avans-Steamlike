@@ -1,7 +1,7 @@
 const ApiResponse = require('../model/response/api.response')
 const neo = require('../neodb/seraphhelper')
-const auth = require('../../config/authentication.config')
-const secret = require('../../config/config.json').devsecret
+const auth = require('../config/authentication.config')
+const secret = require('../config/config.json').devsecret
 const Developer = require('../schemas/developer.schema').Developer
 
 function getAll(req,res){

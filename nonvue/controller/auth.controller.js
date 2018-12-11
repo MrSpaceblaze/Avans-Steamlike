@@ -1,7 +1,7 @@
 const ApiResponse = require('../model/response/api.response')
-const auth = require('../../config/authentication.config')
+const auth = require('../config/authentication.config')
 const User = require('../schemas/user.schema')
-const secret = require('../../config/config.json').secret
+const secret = require('../config/config.json').secret
 const Developer = require('../schemas/developer.schema').Developer
 const neo = require('../neodb/seraphhelper')
 

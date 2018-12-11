@@ -4,7 +4,7 @@ var morgan = require("morgan");
 const app = express();
 
 // Config
-var config = require("../config/config.json");
+var config = require("./config/config.json");
 
 // Responses
 const NotFoundResponse = require("./model/response/notfound.response");

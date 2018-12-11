@@ -52,7 +52,8 @@ export default Vue.extend({
     methods: {
         submit() {
             alert('Submitted');
-            axios.post(config.url + '/api/dev/register',
+            
+            axios.post("http://localhost:51127" + '/api/dev/register',
             {username: this.username, password: this.password, name: this.name})
                 .then((response) => {
                     if (response.status === 200) {

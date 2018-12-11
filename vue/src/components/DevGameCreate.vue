@@ -32,8 +32,8 @@
                         <p>Photo</p>
                     </div>
                     <div class="col">
-                        <img :src="game.image">
-                        <input type="image" v-model="game.image">
+                        <img :src="'data:image/jpg;base64,'+game.image">
+                        <input type="file" @change="handleFileSelect('g',0,$event)">
                     </div>
                     
                 </div>
@@ -45,7 +45,8 @@
                             <p> Image </p>
                         </div>
                         <div>
-                            <input type="image" v-model="achievement.image">
+                            <img :src="'data:image/jpg;base64,'+achievements[achievement.index].image">
+                            <input type="file" @change="handleFileSelect('a',achievement.index,$event)">
                         </div>
                         <div class="row">
                             <div class="col">
@@ -84,28 +85,20 @@ import router from '../router';
 export default Vue.extend({
     data() {
         return{
-        game:{image:{},
-            desc:"",
-            name:"",
-            },
+        game:{},
         achievements: [{}],
-        
-        setAchievements: [{}],
         }
     },
     methods: {
         addAchievement() {
             this.achievements.push({});
         },
-        setAchievement() {
-            this.setAchievements.push(this.achievements);
-        },
         submit(){
             axios.post(config.url+"/api/games",{image:this.game.image,desc:this.game.desc,name:this.game.name}).then(
                 (res)=>{
                     if(res.status==200){
-                        var achievementSize = this.setAchievements.length
-                        this.setAchievements.forEach(achievement=>{
+                        var achievementSize = this.achievements.length
+                        this.achievements.forEach(achievement=>{
                             axios.post(config.url+"/api/games/"+res.data._id+"/achievements",{achievement})
                                 .then((res)=>{
                                     if(res.status==200){
@@ -124,6 +117,26 @@ export default Vue.extend({
                     }
                 }
             )
+        },
+        handleFileSelect(a,index,evt){
+            var files = evt.target.files;
+            var file = files[0];
+  
+            if (files && file) {
+                var reader = new FileReader();
+  
+                reader.onload =this._handleReaderLoaded(this,index,a);
+                reader.readAsBinaryString(file);
+            }
+        },
+  
+        _handleReaderLoaded(readerEvt,index,a:string) {
+            var binaryString = readerEvt.target.result;
+            if(a.charAt(0)=='a'){
+                this.achievements[index].image=btoa(binaryString)
+            }else{
+                this.game.image = btoa(binaryString);
+            }
         }
     },
 });

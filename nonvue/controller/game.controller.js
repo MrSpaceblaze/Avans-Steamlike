@@ -2,7 +2,7 @@ const ApiResponse = require('../model/response/api.response')
 const neodb = require('../neodb/seraphhelper')
 const User = require('../schemas/user.schema')
 const Game = require('../schemas/game.schema').Game
-const auth = require('../../config/authentication.config')
+const auth = require('../config/authentication.config')
 const Developer = require('../schemas/developer.schema').Developer
 
 function getByID(req,res){
